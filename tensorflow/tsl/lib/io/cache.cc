@@ -19,6 +19,7 @@ limitations under the License.
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "tensorflow/tsl/platform/mutex.h"
 #include "tensorflow/tsl/platform/raw_coding.h"
@@ -352,7 +353,7 @@ class ShardedLRUCache : public Cache {
  private:
   LRUCache shard_[kNumShards];
   mutex id_mutex_;
-  uint64_t last_id_;
+  std::uint64_t last_id_;
 
   static inline uint32_t HashSlice(const Slice& s) {
     return Hash(s.data(), s.size(), 0);
@@ -388,7 +389,7 @@ class ShardedLRUCache : public Cache {
   void* Value(Handle* handle) override {
     return reinterpret_cast<LRUHandle*>(handle)->value;
   }
-  uint64_t NewId() override {
+  std::uint64_t NewId() override {
     mutex_lock l(id_mutex_);
     return ++(last_id_);
   }
