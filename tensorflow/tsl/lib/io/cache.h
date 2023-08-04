@@ -96,7 +96,7 @@ class Cache {
   // sharing the same cache to partition the key space.  Typically the
   // client will allocate a new id at startup and prepend the id to
   // its cache keys.
-  virtual uint64_t NewId() = 0;
+  virtual std::uint64_t NewId() = 0;
 
   // Remove all cache entries that are not actively in use.  Memory-constrained
   // applications may wish to call this method to reduce memory usage.
